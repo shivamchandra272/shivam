@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Secure Member Gateway</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            color: #333; 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+            
+            /* --- FULL SCREEN BACKGROUND --- */
+            background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), 
+                              url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* --- AUTH CONTAINER STYLES (HOME, LOGIN, REGISTER) --- */
+        .auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .auth-box { 
+            background: white; 
+            padding: 40px; 
+            width: 90%; 
+            max-width: 360px; 
+            border-radius: 12px; 
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1); 
+            text-align: center;
+        }
+        .auth-box h1, .auth-box h2 { color: #0f172a; margin-bottom: 15px; }
+        .auth-box p { color: #64748b; margin-bottom: 25px; font-size: 16px; }
+        .auth-box label { display: block; text-align: left; margin-bottom: 5px; font-weight: 500; color: #334155; }
+        
+        .auth-box input[type="text"], 
+        .auth-box input[type="email"], 
+        .auth-box input[type="password"] { 
+            padding: 10px; width: 100%; margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 6px; 
+        }
+        .auth-box input[type="submit"], .btn { 
+            display: block; width: 100%; padding: 12px; font-size: 16px; font-weight: bold; 
+            text-decoration: none; border-radius: 6px; color: white; border: none; cursor: pointer; text-align: center;
+        }
+        .btn-login { background-color: #4CAF50; margin-bottom: 10px; }
+        .btn-register { background-color: #008CBA; }
+        .back-link { display: block; margin-top: 15px; color: #64748b; text-decoration: none; font-size: 14px; }
+
+        /* --- ERROR ALERT STYLE --- */
+        .alert-error {
+            background-color: #fee2e2;
+            color: #ef4444;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: left;
+            word-wrap: break-word; 
+        }
+
+        /* --- DASHBOARD WRAPPER LAYOUT --- */
+        .sidebar { 
+            width: 260px; background-color: #1e293b; color: white; 
+            display: flex; flex-direction: column; padding: 25px 20px;
+        }
+        .nav-logo { color: #38bdf8; font-size: 22px; font-weight: bold; margin-bottom: 40px; padding-left: 10px; }
+        .nav-links { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .nav-links a { 
+            color: #cbd5e1; text-decoration: none; font-size: 15px; font-weight: 500; 
+            padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: white; background-color: #334155; }
+        .btn-logout { background-color: #ef4444 !important; color: white !important; text-align: center; margin-top: auto; }
+
+        .main-container { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .main-content { max-width: 1000px; width: 100%; margin: 40px auto; padding: 0 40px; flex: 1; }
+        
+        .welcome-card { 
+            padding: 100px; 
+            border-radius: 120px; 
+            box-shadow: 0 4px 6px 10px rgba(0,0,0,0.5);
+            
+            /* --- BACKGROUND CODE --- */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                              url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover; 
+            background-position: center; 
+        }
+        .welcome-card h1 { color: #0f172a; font-size: 28px; margin-bottom: 10px; }
+        .welcome-card p { color: #64748b; line-height: 1.6; }
+        hr { margin: 20px 0; border: 0; border-top: 1px solid #e2e8f0; }
+
+        /* --- SPA VIEW REVEAL ENGINE --- */
+        .auth-view, .page-section { display: none; }
+        .active-view { display: block !important; }
+        .active-flex-view { display: flex !important; }
+
+        /* --- ENHANCED FOOTER STYLES --- */
+        .site-footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 50px 30px 20px;
+            margin-top: auto; 
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1000px; 
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap; 
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #1e293b; 
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px; 
+        }
+
+        .footer-section h3 { color: white; margin-bottom: 15px; font-size: 20px; }
+        .footer-section h4 { color: white; margin-bottom: 15px; font-size: 16px; }
+        .footer-section p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 10px; }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section a:hover {
+            color: #38bdf8; 
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 13px;
+        }
+
+        /* ========================================== */
+        /* 📱 MOBILE RESPONSIVE LAYOUT ENGINE         */
+        /* ========================================== */
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+                background-color: rgba(30, 41, 59, 0.95); 
+            }
+            .nav-logo {
+                margin-bottom: 15px;
+                padding-left: 0;
+                text-align: center;
+            }
+            .nav-links {
+                flex-direction: row;
+                overflow-x: auto; 
+                padding-bottom: 5px; 
+                gap: 5px;
+            }
+            .nav-links a {
+                white-space: nowrap; 
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            .btn-logout {
+                margin-top: 0; 
+            }
+            .main-content {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            .welcome-card {
+                padding: 25px 20px;
+            }
+            .welcome-card h1 {
+                font-size: 24px;
+            }
+            .footer-container {
+                flex-direction: column;
+                text-align: left; 
+                gap: 20px;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+
+    <div id="auth-container" class="auth-overlay">
+        
+        <div id="view-gateway" class="auth-box auth-view">
+            <h1>🔒 Secure Portal</h1>
+            <p>Do you already have an account with us?</p>
+            <button onclick="showAuthView('view-login')" class="btn btn-login">Yes, Log In</button>
+            <div style="height: 10px;"></div>
+            <button onclick="showAuthView('view-register')" class="btn btn-register">No, Create One</button>
+        </div>
+
+        <div id="view-login" class="auth-box auth-view">
+            <h2>🔒 Secure Sign In</h2>
+            
+            <div id="login-error" class="alert-error" style="display: none;">Invalid username or password. Please try again.</div>
+            
+            <form method="POST" action="/login-submit">
+                <label>Username:</label>
+                <input type="text" name="username" placeholder="Enter username" required>
+                <label>Password:</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+                <input type="submit" value="Verify & Log In" class="btn btn-login">
+            </form>
+            <a onclick="showAuthView('view-gateway')" class="back-link" style="cursor:pointer;">← Go Back</a>
+        </div>
+
+        <div id="view-register" class="auth-box auth-view">
+            <h2>🛡️ Create Account</h2>
+            <form method="POST" action="/register-submit">
+                <label>Choose Username:</label>
+                <input type="text" name="username" placeholder="Create username" required>
+                <label>Email Address:</label>
+                <input type="email" name="email" placeholder="Enter email" required>
+                <label>Create Password:</label>
+                <input type="password" name="password" placeholder="Create strong password" required>
+                <input type="submit" value="Register Account" class="btn btn-register">
+            </form>
+            <a onclick="showAuthView('view-gateway')" class="back-link" style="cursor:pointer;">← Go Back</a>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="nav-logo">🛡️ SecurePortal</div>
+        <div class="nav-links">
+            <a onclick="switchTab('dashboard')" id="tab-dashboard" class="active">Dashboard</a>
+            <a onclick="switchTab('profile')" id="tab-profile">My Profile</a>
+            <a onclick="switchTab('settings')" id="tab-settings">Settings</a>
+            <a onclick="switchTab('about')" id="tab-about">About Us</a>  
+            <a onclick="switchTab('contact')" id="tab-contact">Contact</a>  
+            <a href="/" class="btn-logout">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="main-content">
+
+            <div id="dashboard" class="page-section active-view">
+                <div class="welcome-card">
+                    <h1 id="greeting-title">Welcome Back to the Website!</h1>
+                    <p id="greeting-desc">Your identity was verified with our records. Welcome back to your dashboard.</p>
+                </div>
+            </div>
+
+            <div id="profile" class="page-section">
+                <div class="welcome-card">
+                    <h1>Account Profile</h1>
+                    <p>Manage your personal details and verified login credentials safely.</p>
+                    <hr>
+                    <p><strong>Member Status:</strong> Premium Tier Active</p>
+                    <p><strong>Encryption Key:</strong> SHA-256 Verified</p>
+                </div>
+            </div>
+
+            <div id="settings" class="page-section">
+                <div class="welcome-card">
+                    <h1>System Settings</h1>
+                    <p>Configure app performance rules and user preferences toggles.</p>
+                    <hr>
+                    <p><input type="checkbox" id="email-notif"> <label style="display:inline; margin-left: 5px;" for="email-notif">Email Sync Alerts</label></p>
+                    <br>
+                    <p><input type="checkbox" id="two-factor"> <label style="display:inline; margin-left: 5px;" for="two-factor">Enforce Multi-Factor Checkouts</label></p>
+                </div>
+            </div>
+            
+            <div id="about" class="page-section">
+                <div class="welcome-card">
+                    <h1>About Us</h1>
+                    <p>Learn more about our mission and values.</p>
+                    <hr>
+                    <p>We are dedicated to providing secure and reliable web services to ensure your digital environment is safe and efficient.</p>
+                </div>
+            </div>
+
+            <div id="contact" class="page-section">
+                <div class="welcome-card">
+                    <h1>Contact Us</h1>
+                    <p>Get in touch with our support team.</p>
+                    <hr>
+                    <p><strong>Email:</strong> chandrashivam256@gmail.com</p>
+                    <p><strong>Phone:</strong> 8780784362</p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="site-footer">
+            <div class="footer-container">
+                
+                <div class="footer-section">
+                    <h3>🛡️ SecurePortal</h3>
+                    <p>Delivering enterprise-grade workspace solutions and secure access management since 2026.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a onclick="switchTab('dashboard')" style="cursor:pointer;">My Dashboard</a></li>
+                        <li><a onclick="switchTab('settings')" style="cursor:pointer;">Account Settings</a></li>
+                        <li><a onclick="switchTab('about')" style="cursor:pointer;">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p>Need help? Reach out directly to our engineering team.</p>
+                    <p>📧 <a href="mailto:chandrashivam256@gmail.com">chandrashivam256@gmail.com</a></p>
+                    <p>📞 8780784362</p>
+                </div>
+
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Secure App Workspace Engine. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Manages visibility loops between Auth Overlays
+        function showAuthView(viewId) {
+            const views = document.querySelectorAll('.auth-view');
+            views.forEach(v => v.classList.remove('active-view'));
+            document.getElementById(viewId).classList.add('active-view');
+        }
+
+        // Switches workspace application components seamlessly
+        function switchTab(tabId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(s => s.classList.remove('active-view'));
+            
+            const tabs = document.querySelectorAll('.nav-links a');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active-view');
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            // Scroll to top when switching tabs, especially helpful on mobile
+            document.querySelector('.main-container').scrollTo(0, 0);
+        }
+
+        // Read URL variables cleanly to determine login states directly
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const route = window.location.pathname;
+
+            if (route.startsWith('/dashboard')) {
+                // Remove authentication barriers 
+                document.getElementById('auth-container').style.display = 'none';
+                
+                if (params.get('new') === 'true') {
+                    document.getElementById('greeting-title').innerText = "🎉 Welcome to the Website!";
+                    document.getElementById('greeting-desc').innerText = "Your account has been created successfully. Welcome to your private web space!";
+                }
+            } else {
+                // If path is root '/', show gateway views
+                showAuthView('view-gateway');
+            }
+        });
+    </script>
+</body>
+</html>
