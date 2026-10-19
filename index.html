@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NOVA Social builds sharp strategies, bold content, and measurable growth for ambitious brands.">
+  <title>NOVA Social | Make your brand impossible to ignore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#18211f; --paper:#f5f1e9; --lime:#d6f249; --coral:#ff715b; --muted:#69716b; --line:rgba(24,33,31,.18); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--paper); color:var(--ink); font-family:'Space Grotesk',sans-serif; line-height:1.45; overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+    .wrap { max-width:1240px; margin:auto; padding-left:32px; padding-right:32px; }
+    .eyebrow { color:var(--coral); font:500 12px 'DM Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
+    .site-header { align-items:center; display:flex; justify-content:space-between; padding-bottom:24px; padding-top:24px; }
+    .logo { align-items:center; display:flex; font-size:22px; font-weight:700; letter-spacing:-.06em; }
+    .logo-mark { background:var(--coral); display:inline-block; height:18px; margin-right:8px; transform:rotate(-12deg); width:18px; }
+    .nav { align-items:center; display:flex; gap:20px; }
+    .nav a { font-size:14px; font-weight:500; }
+    .nav .nav-cta { background:var(--ink); color:var(--paper); padding:11px 17px; cursor:pointer; }
+    .nav .btn-auth { background:var(--lime); color:var(--ink); font-weight:600; padding:9px 15px; border-radius:4px; border:none; cursor:pointer; font-family:inherit; }
+    .menu { background:none; border:0; cursor:pointer; display:none; font:500 12px 'DM Mono',monospace; }
+    .hero { min-height:700px; padding-bottom:110px; padding-top:80px; position:relative; }
+    .hero:after { background:var(--lime); border-radius:50%; content:''; height:420px; position:absolute; right:-110px; top:90px; width:420px; z-index:-1; }
+    .hero-logo { align-items:center; display:flex; height:290px; justify-content:center; pointer-events:none; position:absolute; right:-20px; top:150px; transform:rotate(-7deg); width:420px; }
+    .hero-logo-word { color:var(--ink); font-size:clamp(88px,10vw,128px); font-weight:700; letter-spacing:-.09em; line-height:1; position:relative; }
+    .hero-logo-word span { display:inline-block; position:relative; }
+    .hero-logo-word span:before { border:6px solid var(--coral); border-left-color:transparent; border-right-color:transparent; border-radius:50%; content:''; height:140px; left:50%; position:absolute; top:50%; transform:translate(-50%,-50%) rotate(-18deg); width:140px; }
+    .hero-logo-word span:after { background:var(--coral); border:4px solid var(--lime); border-radius:50%; box-shadow:102px 0 0 -4px var(--coral), 102px 0 0 0 var(--lime), 0 102px 0 -4px var(--coral), 0 102px 0 0 var(--lime), 102px 102px 0 -4px var(--coral), 102px 102px 0 0 var(--lime); content:''; height:18px; left:50%; position:absolute; top:50%; transform:translate(-50%,-50%); width:18px; }
+    .hero-logo-caption { bottom:36px; color:var(--muted); font:500 13px 'DM Mono',monospace; letter-spacing:.16em; position:absolute; right:100px; text-transform:uppercase; }
+    .hero h1 { font-size:clamp(58px,9.5vw,132px); letter-spacing:-.09em; line-height:.88; max-width:970px; text-transform:uppercase; }
+    .hero h1 span { color:var(--coral); display:block; font-style:italic; }
+    .hero-bottom { align-items:end; display:flex; justify-content:space-between; margin-top:55px; max-width:1060px; }
+    .hero-copy { font-size:18px; max-width:370px; }
+    .hero-note { color:var(--muted); font:12px 'DM Mono',monospace; max-width:185px; text-transform:uppercase; }
+    .pill-link { align-items:center; background:var(--ink); color:var(--paper); display:inline-flex; font-size:14px; font-weight:600; gap:28px; margin-top:25px; padding:15px 18px; }
+    .pill-link i { color:var(--lime); font-size:20px; font-style:normal; }
+    .ticker { background:var(--ink); color:var(--paper); overflow:hidden; padding:16px 0; white-space:nowrap; }
+    .ticker-track { animation:slide 24s linear infinite; display:inline-block; font:500 13px 'DM Mono',monospace; letter-spacing:.1em; }
+    .ticker b { color:var(--lime); margin:0 26px; }
+    @keyframes slide { to { transform:translateX(-25%); } }
+    .section { padding-bottom:115px; padding-top:115px; }
+    .section-heading { align-items:end; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; margin-bottom:38px; padding-bottom:18px; }
+    h2 { font-size:clamp(40px,6vw,76px); letter-spacing:-.08em; line-height:.95; max-width:650px; text-transform:uppercase; }
+    .service-grid { display:grid; gap:1px; grid-template-columns:repeat(3,1fr); }
+    .service { border-bottom:1px solid var(--line); min-height:275px; padding:27px 22px 30px 0; }
+    .service:nth-child(3n+2), .service:nth-child(3n+3) { border-left:1px solid var(--line); padding-left:22px; }
+    .service-number { color:var(--coral); font:12px 'DM Mono',monospace; }
+    .service h3 { font-size:25px; letter-spacing:-.05em; margin:65px 0 12px; }
+    .service p, .step p { color:var(--muted); font-size:15px; max-width:310px; }
+    .service-tags { color:var(--ink); font:11px 'DM Mono',monospace; margin-top:18px; text-transform:uppercase; }
+    .dark-section { background:var(--ink); color:var(--paper); }
+    .dark-section .eyebrow { color:var(--lime); }
+    .process-grid { display:grid; gap:0; grid-template-columns:repeat(4,1fr); }
+    .step { border-left:1px solid rgba(245,241,233,.24); min-height:250px; padding:0 25px; }
+    .step:first-child { border-left:0; padding-left:0; }
+    .step-number { color:var(--lime); font:28px 'DM Mono',monospace; }
+    .step h3 { font-size:24px; letter-spacing:-.05em; margin:65px 0 14px; }
+    .dark-section .step p { color:#b4bdb5; }
+    .work-grid { display:grid; gap:18px; grid-template-columns:1.25fr .75fr; }
+    .work-card { min-height:370px; overflow:hidden; padding:24px; position:relative; }
+    .work-card:before { background-position:center; background-size:cover; content:''; inset:0; position:absolute; transition:transform .6s ease; }
+    .work-card:hover:before { transform:scale(1.05); }
+    .work-card:first-child:before { background-image:linear-gradient(20deg,rgba(24,33,31,.75),transparent 70%),url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85'); }
+    .work-card:last-child:before { background-image:linear-gradient(20deg,rgba(24,33,31,.75),transparent 70%),url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=85'); }
+    .work-content { bottom:25px; color:white; left:24px; position:absolute; z-index:1; }
+    .work-content h3 { font-size:32px; letter-spacing:-.06em; }
+    .work-content p { font:11px 'DM Mono',monospace; margin-top:4px; text-transform:uppercase; }
+    .proof { display:grid; gap:30px; grid-template-columns:repeat(3,1fr); margin-top:52px; }
+    .proof-item { border-top:1px solid var(--line); padding-top:18px; }
+    .proof-item strong { display:block; font-size:52px; letter-spacing:-.08em; line-height:1; }
+    .proof-item span { color:var(--muted); display:block; font:11px 'DM Mono',monospace; margin-top:12px; text-transform:uppercase; }
+    .contact-section { background:var(--coral); padding-bottom:90px; padding-top:95px; }
+    .contact-layout { display:grid; gap:55px; grid-template-columns:1fr 1fr; }
+    .contact-section h2 { max-width:550px; }
+    .contact-copy { font-size:18px; margin-top:28px; max-width:400px; }
+    .contact-details { font:13px 'DM Mono',monospace; line-height:2; margin-top:35px; }
+    .contact-form { display:grid; gap:13px; }
+    .contact-form input, .contact-form textarea, .contact-form select { background:transparent; border:0; border-bottom:1px solid rgba(24,33,31,.55); color:var(--ink); font:15px 'Space Grotesk',sans-serif; outline:0; padding:14px 0; width:100%; }
+    .contact-form textarea { min-height:105px; resize:vertical; }
+    .contact-form select { border-radius:0; }
+    .submit { background:var(--ink); border:0; color:var(--paper); cursor:pointer; font:600 14px 'Space Grotesk',sans-serif; margin-top:12px; padding:16px; text-align:left; }
+    .submit span { color:var(--lime); float:right; font-size:20px; line-height:12px; }
+    footer { background:var(--ink); color:var(--paper); padding:38px 0 25px; }
+    .footer-top { align-items:start; display:flex; justify-content:space-between; }
+    footer .logo { color:var(--paper); }
+    .footer-links { display:flex; gap:22px; }
+    .footer-links a, .copyright { color:#a9b2aa; font:11px 'DM Mono',monospace; text-transform:uppercase; }
+    .copyright { border-top:1px solid rgba(245,241,233,.18); margin-top:52px; padding-top:17px; }
+
+    /* AUTH MODAL & ADMIN STYLES */
+    .modal-overlay { position:fixed; inset:0; background:rgba(24,33,31,0.7); backdrop-filter:blur(4px); display:none; justify-content:center; align-items:center; z-index:1000; padding:20px; }
+    .modal-overlay.active { display:flex; }
+    .auth-card { background:var(--paper); border:2px solid var(--ink); border-radius:8px; padding:32px; width:100%; max-width:440px; position:relative; box-shadow:8px 8px 0px var(--ink); }
+    .auth-card h2 { font-size:28px; margin-bottom:8px; }
+    .auth-card p { font-size:14px; color:var(--muted); margin-bottom:20px; }
+    .auth-tabs { display:flex; gap:10px; margin-bottom:20px; border-bottom:1px solid var(--line); }
+    .auth-tab { padding:8px 16px; background:none; border:none; font:500 14px 'DM Mono',monospace; cursor:pointer; opacity:0.5; }
+    .auth-tab.active { opacity:1; border-bottom:2px solid var(--coral); color:var(--coral); }
+    .auth-form { display:grid; gap:14px; }
+    .auth-form input, .auth-form select { border:1px solid var(--line); background:white; padding:12px; font-family:inherit; border-radius:4px; font-size:14px; }
+    .auth-btn { background:var(--ink); color:var(--paper); font-weight:600; padding:14px; border:none; cursor:pointer; font-family:inherit; font-size:15px; margin-top:8px; }
+    .auth-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:22px; cursor:pointer; font-weight:bold; }
+
+    /* ADMIN DASHBOARD SECTION */
+    .admin-section { display:none; background:#ffffff; border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); padding:60px 0; margin-top:40px; }
+    .admin-section.active { display:block; }
+    .admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-bottom:1px solid var(--line); padding-bottom:15px; }
+    .admin-table-wrap { overflow-x:auto; }
+    .admin-table { width:100%; border-collapse:collapse; text-align:left; font-size:14px; }
+    .admin-table th, .admin-table td { padding:14px; border-bottom:1px solid var(--line); }
+    .admin-table th { font-family:'DM Mono',monospace; font-size:12px; text-transform:uppercase; color:var(--muted); background:#f9f8f4; }
+    .badge-role { display:inline-block; padding:3px 8px; border-radius:4px; font-size:11px; font-family:'DM Mono',monospace; font-weight:bold; }
+    .badge-admin { background:var(--coral); color:white; }
+    .badge-user { background:var(--lime); color:var(--ink); }
+    .btn-action { padding:6px 12px; border:1px solid var(--ink); background:none; cursor:pointer; font-family:'DM Mono',monospace; font-size:11px; margin-right:5px; font-weight:bold; }
+    .btn-danger { background:#ffeded; color:#d32f2f; border-color:#d32f2f; }
+    .btn-toggle { background:#eef6ff; color:#1976d2; border-color:#1976d2; }
+
+    @media (max-width:720px) {
+      .wrap { padding-left:20px; padding-right:20px; }
+      .nav { background:var(--paper); display:none; flex-direction:column; left:0; padding:25px 20px; position:absolute; right:0; top:68px; z-index:5; }
+      .nav.open { display:flex; }
+      .menu { display:block; }
+      .hero { min-height:auto; padding-bottom:80px; padding-top:70px; }
+      .hero:after { height:190px; right:-100px; top:130px; width:190px; }
+      .hero-logo { height:140px; opacity:.24; right:-50px; top:135px; width:220px; }
+      .hero-logo-word { font-size:58px; }
+      .hero-logo-word span:before { border-width:3px; height:70px; width:70px; }
+      .hero-logo-word span:after { height:10px; width:10px; }
+      .hero-logo-caption { bottom:4px; font-size:9px; right:57px; }
+      .hero-bottom, .section-heading, .footer-top { align-items:start; flex-direction:column; gap:25px; }
+      .section { padding-bottom:75px; padding-top:75px; }
+      .service-grid, .process-grid, .work-grid, .contact-layout, .proof { grid-template-columns:1fr; }
+      .service, .service:nth-child(3n+2), .service:nth-child(3n+3) { border-left:0; padding-left:0; }
+      .service h3 { margin-top:38px; }
+      .step, .step:first-child { border-left:0; border-top:1px solid rgba(245,241,233,.24); min-height:0; padding:25px 0; }
+      .step h3 { margin-top:25px; }
+      .work-card { min-height:285px; }
+      .footer-links { flex-wrap:wrap; gap:12px 18px; margin-top:25px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header wrap">
+    <a class="logo" href="#home"><i class="logo-mark"></i>NOVA<span style="color:var(--coral)">.</span></a>
+    <button class="menu" aria-label="Toggle menu">MENU +</button>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#work">Work</a>
+      <a href="#contact" class="nav-cta">Let's talk <span>↗</span></a>
+      
+      <!-- User / Admin Auth Dynamic Elements -->
+      <button id="authBtn" class="btn-auth">Login / Register</button>
+      <a id="adminNavBtn" href="#adminPanel" style="display:none; font-weight:700; color:var(--coral);">Admin Panel</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="home">
+      <p class="eyebrow">Independent creative studio / est. 2026</p>
+      <div class="hero-logo" aria-label="NOVA Social logo" role="img"><span class="hero-logo-word">N<span>O</span>VA</span><span class="hero-logo-caption">Social Studio</span></div>
+      <h1>Make noise.<span>Move people.</span></h1>
+      <div class="hero-bottom">
+        <div>
+          <p class="hero-copy">We turn good brands into the ones people remember, share, and choose.</p>
+          <a class="pill-link" href="#contact">Start a conversation <i>↗</i></a>
+        </div>
+        <p class="hero-note">Strategy, content &amp; growth for brands with somewhere to go.</p>
+      </div>
+    </section>
+
+    <!-- ADMIN MANAGEMENT PANEL (Visible to Admin Role) -->
+    <section id="adminPanel" class="admin-section">
+      <div class="wrap">
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow">User Management &amp; System Control</p>
+            <h2>Admin Control Panel</h2>
+          </div>
+          <button id="btnCreateUser" class="btn-auth" style="background:var(--ink); color:white;">+ Add User</button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Created At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <!-- Dynamically Populated via API -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker"><div class="ticker-track">SOCIAL STRATEGY <b>✳</b> CONTENT THAT CONNECTS <b>✳</b> GROWTH WITH INTENT <b>✳</b> SOCIAL STRATEGY <b>✳</b> CONTENT THAT CONNECTS <b>✳</b> GROWTH WITH INTENT <b>✳</b></div></div>
+
+    <section class="section wrap" id="services">
+      <div class="section-heading"><p class="eyebrow">01 / What we do</p><h2>Everything you need to stand out.</h2></div>
+      <div class="service-grid">
+        <article class="service"><span class="service-number">01</span><h3>Social Media</h3><p>Build a presence with a point of view. We plan, create, publish, and keep your community moving.</p><div class="service-tags">Strategy / Community / Campaigns</div></article>
+        <article class="service"><span class="service-number">02</span><h3>Content Studio</h3><p>Scroll-stopping films, reels, and visual worlds that make your audience pause for the right reasons.</p><div class="service-tags">Reels / Photo / Brand films</div></article>
+        <article class="service"><span class="service-number">03</span><h3>Brand Voice</h3><p>Find the words and ideas that sound like you, then turn them into a language people want to repeat.</p><div class="service-tags">Positioning / Copy / Identity</div></article>
+        <article class="service"><span class="service-number">04</span><h3>Creator Collabs</h3><p>Connect with the right voices and turn influence into credible attention for your brand.</p><div class="service-tags">Creators / UGC / Partnerships</div></article>
+        <article class="service"><span class="service-number">05</span><h3>Search &amp; Growth</h3><p>Show up when intent is high. Our organic and paid programs turn visibility into action.</p><div class="service-tags">SEO / Paid media / Analytics</div></article>
+        <article class="service"><span class="service-number">06</span><h3>Launch Support</h3><p>From first idea to first customer, we build a clear runway for your next big move.</p><div class="service-tags">Go-to-market / Funnels / Testing</div></article>
+      </div>
+    </section>
+
+    <section class="section dark-section" id="process"><div class="wrap"><div class="section-heading"><p class="eyebrow">02 / How we work</p><h2>Clear thinking. Braver making.</h2></div><div class="process-grid"><article class="step"><span class="step-number">01</span><h3>Listen closely</h3><p>We get under the skin of your business, audience, and ambition before we make a single recommendation.</p></article><article class="step"><span class="step-number">02</span><h3>Find the spark</h3><p>We turn insight into a sharp creative direction your team can actually get behind.</p></article><article class="step"><span class="step-number">03</span><h3>Make it real</h3><p>Our strategists, makers, and operators bring the idea to life across every relevant touchpoint.</p></article><article class="step"><span class="step-number">04</span><h3>Keep improving</h3><p>We learn from the numbers, keep the winners, and make the next version even stronger.</p></article></div></div></section>
+
+    <section class="section wrap" id="work"><div class="section-heading"><p class="eyebrow">03 / Selected work</p><h2>Proof, not promises.</h2></div><div class="work-grid"><a class="work-card" href="#contact"><div class="work-content"><h3>Rove Coffee</h3><p>Brand world / Social launch / 4.2x reach</p></div></a><a class="work-card" href="#contact"><div class="work-content"><h3>Common Ground</h3><p>Strategy / Content system / 180% growth</p></div></a></div><div class="proof"><div class="proof-item"><strong>4.2x</strong><span>Average campaign reach</span></div><div class="proof-item"><strong>68%</strong><span>More qualified enquiries</span></div><div class="proof-item"><strong>24</strong><span>Brands moved forward</span></div></div></section>
+
+    <section class="contact-section" id="contact"><div class="wrap contact-layout"><div><p class="eyebrow">04 / Get in touch</p><h2>Ready to make your move?</h2><p class="contact-copy">Tell us where you are, where you want to go, and what is getting in the way. We will come back with a clear next step.</p><div class="contact-details">hello@novasocial.in<br>+91 98765 43210<br>Ahmedabad / Working everywhere</div></div><form class="contact-form" action="mailto:hello@novasocial.in" method="post" enctype="text/plain"><input name="name" placeholder="Your name *" required><input name="email" type="email" placeholder="Email address *" required><input name="brand" placeholder="Brand or company"><select name="service"><option value="">What can we help with?</option><option>Social media</option><option>Content production</option><option>Brand strategy</option><option>Search and growth</option></select><textarea name="message" placeholder="Tell us a little about the brief"></textarea><button class="submit" type="submit">Send enquiry <span>↗</span></button></form></div></section>
+  </main>
+
+  <!-- AUTHENTICATION MODAL -->
+  <div id="authModal" class="modal-overlay">
+    <div class="auth-card">
+      <button id="closeAuth" class="auth-close">&times;</button>
+      <div class="auth-tabs">
+        <button id="tabLogin" class="auth-tab active">Login</button>
+        <button id="tabRegister" class="auth-tab">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="formLogin" class="auth-form">
+        <h2>Welcome Back</h2>
+        <p>Log in to access your user or admin account.</p>
+        <input type="text" id="loginUsername" placeholder="Username or Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit" class="auth-btn">Log In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="formRegister" class="auth-form" style="display:none;">
+        <h2>Create Account</h2>
+        <p>Register a new account on NOVA Social.</p>
+        <input type="text" id="regUsername" placeholder="Username" required>
+        <input type="email" id="regEmail" placeholder="Email Address" required>
+        <input type="password" id="regPassword" placeholder="Password" required>
+        <button type="submit" class="auth-btn">Register Account</button>
+      </form>
+    </div>
+  </div>
+
+  <footer><div class="wrap"><div class="footer-top"><a class="logo" href="#home"><i class="logo-mark"></i>NOVA<span style="color:var(--coral)">.</span></a><div class="footer-links"><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a><a href="#contact">Contact</a></div></div><p class="copyright">© 2026 Nova Social Studio. Built for brands going places.</p></div></footer>
+
+  <script>
+    // Navigation toggle
+    const menu = document.querySelector('.menu');
+    const nav = document.querySelector('.nav');
+    menu.addEventListener('click', () => nav.classList.toggle('open'));
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+
+    // Auth & Admin Application State
+    let currentUser = JSON.parse(localStorage.getItem('nova_user') || 'null');
+
+    const authBtn = document.getElementById('authBtn');
+    const authModal = document.getElementById('authModal');
+    const closeAuth = document.getElementById('closeAuth');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const formLogin = document.getElementById('formLogin');
+    const formRegister = document.getElementById('formRegister');
+    const adminNavBtn = document.getElementById('adminNavBtn');
+    const adminPanel = document.getElementById('adminPanel');
+    const userTableBody = document.getElementById('userTableBody');
+
+    function updateUI() {
+      if (currentUser) {
+        authBtn.textContent = `Logout (${currentUser.username})`;
+
+        if (currentUser.role === 'admin') {
+          adminNavBtn.style.display = 'inline';
+          adminPanel.classList.add('active');
+          loadUsers();
+        } else {
+          adminNavBtn.style.display = 'none';
+          adminPanel.classList.remove('active');
+        }
+      } else {
+        authBtn.textContent = 'Login / Register';
+        adminNavBtn.style.display = 'none';
+        adminPanel.classList.remove('active');
+      }
+    }
+
+    authBtn.addEventListener('click', () => {
+      if (currentUser) {
+        currentUser = null;
+        localStorage.removeItem('nova_user');
+        updateUI();
+      } else {
+        authModal.classList.add('active');
+      }
+    });
+
+    closeAuth.addEventListener('click', () => authModal.classList.remove('active'));
+
+    tabLogin.addEventListener('click', () => {
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      formLogin.style.display = 'grid';
+      formRegister.style.display = 'none';
+    });
+
+    tabRegister.addEventListener('click', () => {
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      formRegister.style.display = 'grid';
+      formLogin.style.display = 'none';
+    });
+
+    document.getElementById('btnCreateUser').addEventListener('click', () => {
+      authModal.classList.add('active');
+      tabRegister.click();
+    });
+
+    // Login Submission
+    formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({username, password})
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentUser = data.user;
+          localStorage.setItem('nova_user', JSON.stringify(currentUser));
+          authModal.classList.remove('active');
+          updateUI();
+        } else {
+          alert(data.message || 'Login failed');
+        }
+      } catch (err) {
+        alert('Server communication error');
+      }
+    });
+
+    // Register Submission
+    formRegister.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('regUsername').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({username, email, password})
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentUser = data.user;
+          localStorage.setItem('nova_user', JSON.stringify(currentUser));
+          authModal.classList.remove('active');
+          updateUI();
+        } else {
+          alert(data.message || 'Registration failed');
+        }
+      } catch (err) {
+        alert('Server communication error');
+      }
+    });
+
+    // Admin Table Data Loader
+    async function loadUsers() {
+      try {
+        const res = await fetch('/api/users');
+        const data = await res.json();
+        userTableBody.innerHTML = '';
+        data.users.forEach(user => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>#${user.id}</td>
+            <td><strong>${user.username}</strong></td>
+            <td>${user.email}</td>
+            <td><span class="badge-role ${user.role === 'admin' ? 'badge-admin' : 'badge-user'}">${user.role}</span></td>
+            <td>${user.created_at || 'N/A'}</td>
+            <td>
+              <button class="btn-action btn-toggle" onclick="toggleRole(${user.id}, '${user.role === 'admin' ? 'user' : 'admin'}')">Make ${user.role === 'admin' ? 'User' : 'Admin'}</button>
+              <button class="btn-action btn-danger" onclick="deleteUser(${user.id})">Delete</button>
+            </td>
+          `;
+          userTableBody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error('Failed to load users:', err);
+      }
+    }
+
+    async function toggleRole(id, role) {
+      if (!confirm(`Change role to ${role}?`)) return;
+      await fetch('/api/toggle-role', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id, role})
+      });
+      loadUsers();
+    }
+
+    async function deleteUser(id) {
+      if (!confirm('Are you sure you want to delete this user?')) return;
+      await fetch('/api/delete-user', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+      });
+      loadUsers();
+    }
+
+    // Initial check
+    updateUI();
+  </script>
+</body>
+</html>
